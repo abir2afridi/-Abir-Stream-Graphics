@@ -33,6 +33,7 @@ import { generateStreamIdeas } from './services/geminiService';
 import { HeroParticles } from './components/HeroParticles';
 import { HeroGeometric } from './components/HeroGeometric';
 import { ThunderOverlay } from './components/ThunderOverlay';
+import { DecryptionText } from './components/DecryptionText';
 import { StreamIdea, Project } from './types';
 
 const PROJECTS_DATA: Project[] = [
@@ -509,9 +510,9 @@ const App: React.FC = () => {
              
              <div className={`px-6 py-2 border-l border-r backdrop-blur-sm transition-colors relative group/subtitle overflow-hidden ${isDark ? 'border-jazen-red/50 bg-jazen-red/5' : 'border-gray-400 bg-white/50'}`}>
                  <div className={`absolute inset-0 bg-jazen-red/10 translate-x-[-100%] group-hover/subtitle:translate-x-0 transition-transform duration-500 ease-out`}></div>
-                 <p className={`text-xl md:text-2xl uppercase tracking-[0.5em] font-serif font-medium whitespace-nowrap relative z-10 ${isDark ? 'text-jazen-gold' : 'text-gray-700'}`}>
-                   Stream Graphics
-                 </p>
+                 <div className={`text-xl md:text-2xl uppercase tracking-[0.5em] font-serif font-medium whitespace-nowrap relative z-10 ${isDark ? 'text-jazen-gold' : 'text-gray-700'}`}>
+                   <DecryptionText text="Stream Graphics" speed={40} initialDelay={1000} />
+                 </div>
              </div>
 
              <div className="flex items-center opacity-70">
