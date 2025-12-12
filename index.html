@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jazen Stream Graphics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              jazen: {
+                dark: '#050608', // Darker, richer black/navy
+                red: '#d91636',  // More vibrant crimson
+                gold: '#e0b885', // Desaturated classy gold
+                gray: '#1f242e',
+                contrast: '#ffffff' // High contrast text for dark mode
+              }
+            },
+            fontFamily: {
+              sans: ['"Teko"', 'sans-serif'],
+              serif: ['"Noto Serif SC"', 'serif'],
+            },
+            backgroundImage: {
+              'grid-pattern': "linear-gradient(to right, #1f242e 1px, transparent 1px), linear-gradient(to bottom, #1f242e 1px, transparent 1px)",
+            },
+            animation: {
+              'logo-glow': 'logo-glow 5s ease-in-out infinite',
+              'pulse-slow': 'pulse-slow 6s ease-in-out infinite',
+              'spin-slow': 'spin 60s linear infinite',
+              'reverse-spin-slow': 'spin 60s linear infinite reverse',
+              'grid-flow': 'grid-flow 20s linear infinite',
+              'glitch-1': 'glitch-1 4s infinite linear alternate-reverse',
+              'glitch-2': 'glitch-2 6s infinite linear alternate-reverse',
+              'lightning': 'lightning 5s infinite linear',
+              'blink': 'blink 1s step-end infinite',
+            },
+            keyframes: {
+              'logo-glow': {
+                '0%, 100%': { filter: 'drop-shadow(0 0 2px rgba(217, 22, 54, 0.1))' },
+                '50%': { filter: 'drop-shadow(0 0 35px rgba(217, 22, 54, 0.6))' },
+              },
+              'pulse-slow': {
+                '0%, 100%': { opacity: '0.1', transform: 'scale(1) translateX(-50%) translateY(-50%)' },
+                '50%': { opacity: '0.3', transform: 'scale(1.05) translateX(-48%) translateY(-48%)' },
+              },
+              'grid-flow': {
+                '0%': { backgroundPosition: '0 0' },
+                '100%': { backgroundPosition: '40px 40px' },
+              },
+              'glitch-1': {
+                '0%, 100%': { clipPath: 'inset(50% 0 50% 0)', transform: 'translate(0)' },
+                '92%': { clipPath: 'inset(50% 0 50% 0)', transform: 'translate(0)' },
+                '94%': { clipPath: 'inset(10% 0 60% 0)', transform: 'translate(-2px, 1px)' },
+                '96%': { clipPath: 'inset(80% 0 5% 0)', transform: 'translate(2px, -1px)' },
+                '98%': { clipPath: 'inset(30% 0 40% 0)', transform: 'translate(-2px, 2px)' }
+              },
+              'glitch-2': {
+                '0%, 100%': { clipPath: 'inset(50% 0 50% 0)', transform: 'translate(0)' },
+                '88%': { clipPath: 'inset(50% 0 50% 0)', transform: 'translate(0)' },
+                '90%': { clipPath: 'inset(20% 0 50% 0)', transform: 'translate(2px, -1px)' },
+                '95%': { clipPath: 'inset(60% 0 10% 0)', transform: 'translate(-1px, 2px)' },
+                '98%': { clipPath: 'inset(40% 0 20% 0)', transform: 'translate(2px, 1px)' }
+              },
+              'lightning': {
+                '0%, 91%': { opacity: '0', filter: 'brightness(1) contrast(1)' },
+                '92%': { opacity: '1', filter: 'brightness(3) contrast(2) drop-shadow(0 0 20px #fff)', color: '#fff' },
+                '93%': { opacity: '0' },
+                '94%': { opacity: '0' },
+                '95%': { opacity: '0.8', filter: 'brightness(2) contrast(1.5) drop-shadow(0 0 10px #4ff)', color: '#fff' },
+                '96%': { opacity: '0' },
+                '100%': { opacity: '0' }
+              },
+              'blink': {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .bg-grid {
+        background-size: 40px 40px;
+        mask-image: linear-gradient(to bottom, transparent, 10%, black, 90%, transparent);
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050608;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #d91636;
+      }
+      .vertical-text {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.1/",
+    "react": "https://esm.sh/react@^19.2.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.560.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.1/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
