@@ -20,7 +20,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     { name: 'Scenes', href: '#scenes', id: 'scenes' },
     { name: 'Projects', href: '#projects', id: 'projects' },
     { name: 'About', href: '#about', id: 'about' },
-    { name: 'Tools', href: '#tools', id: 'tools' },
     { name: 'Panels', href: '#panels', id: 'panels' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];

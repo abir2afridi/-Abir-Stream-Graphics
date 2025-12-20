@@ -29,12 +29,11 @@ import { PanelButton } from './components/PanelButton';
 import { Navbar } from './components/Navbar';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { Typewriter } from './components/Typewriter';
-import { generateStreamIdeas } from './services/geminiService';
 import { HeroParticles } from './components/HeroParticles';
 import { HeroGeometric } from './components/HeroGeometric';
 import { ThunderOverlay } from './components/ThunderOverlay';
 import { DecryptionText } from './components/DecryptionText';
-import { StreamIdea, Project } from './types';
+import { Project } from './types';
 
 const PROJECTS_DATA: Project[] = [
   {
@@ -348,10 +347,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void; isDark: bo
 };
 
 const App: React.FC = () => {
-  const [activeIdea, setActiveIdea] = useState<StreamIdea | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [customVibe, setCustomVibe] = useState("Cyberpunk Dragon");
   const [theme, setTheme] = useState('dark');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
@@ -362,20 +358,6 @@ const App: React.FC = () => {
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    try {
-      const ideas = await generateStreamIdeas(customVibe);
-      if (ideas && ideas.length > 0) {
-        setActiveIdea(ideas[0]);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -471,7 +453,9 @@ const App: React.FC = () => {
           <div className="relative cursor-default select-none">
             
             {/* Thunder Effect Overlay */}
-            <ThunderOverlay />
+            <div className="absolute -inset-20 z-50 pointer-events-none">
+                <ThunderOverlay />
+            </div>
 
             {/* Spotlight Text Effect */}
             <h1 
@@ -663,10 +647,10 @@ const App: React.FC = () => {
                 </div>
                 
                 <h3 className="text-7xl font-bold text-white uppercase tracking-tight z-20">
-                    {activeIdea ? activeIdea.title.split(':')[0] : "BE RIGHT BACK"}
+                    BE RIGHT BACK
                 </h3>
                 <p className="text-jazen-red font-serif italic text-xl mt-2 z-20">
-                    {activeIdea ? activeIdea.brbMessage : "Do not go anywhere"}
+                    System recharging. Do not go anywhere.
                 </p>
                 
                 {/* Animated Background Element */}
@@ -831,66 +815,8 @@ const App: React.FC = () => {
         </RevealOnScroll>
       </section>
 
-      {/* --- AI TERMINAL SECTION --- */}
-      <section id="tools" className="container mx-auto px-4 py-24 scroll-mt-20">
-         <RevealOnScroll>
-            <div className={`max-w-4xl mx-auto border relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#080a0f] border-jazen-gray' : 'bg-gray-900 border-gray-700 shadow-2xl'}`}>
-                {/* Terminal Header */}
-                <div className={`px-4 py-2 flex items-center justify-between border-b ${isDark ? 'bg-jazen-gray/50 border-jazen-gray' : 'bg-gray-800 border-gray-700'}`}>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <span className="text-xs font-mono text-jazen-gold/50">AI_ARCHITECT_V2.exe</span>
-                </div>
-
-                <div className="p-8 md:p-12">
-                  <div className="flex items-center space-x-4 mb-8">
-                      <Zap className="text-jazen-red w-8 h-8" />
-                      <h2 className="text-4xl font-bold text-white tracking-wide">THEME GENERATOR</h2>
-                  </div>
-
-                  <div className={`flex flex-col md:flex-row gap-0 border ${isDark ? 'border-jazen-gray' : 'border-gray-700'}`}>
-                      <input 
-                        type="text" 
-                        value={customVibe}
-                        onChange={(e) => setCustomVibe(e.target.value)}
-                        className="flex-1 bg-black/50 text-white px-6 py-4 focus:outline-none font-mono text-lg placeholder-gray-500"
-                        placeholder="ENTER VIBE PARAMETERS..."
-                      />
-                      <button 
-                        onClick={handleGenerate}
-                        disabled={loading}
-                        className="bg-jazen-red hover:bg-white hover:text-jazen-red text-white font-bold px-8 py-4 uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
-                      >
-                        {loading ? <span className="animate-pulse">PROCESSING</span> : "EXECUTE"}
-                      </button>
-                  </div>
-
-                  {activeIdea && (
-                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="bg-black/40 border-l-2 border-jazen-gold p-4">
-                          <span className="text-xs text-jazen-gold/50 font-mono block mb-1">OUTPUT_TITLE</span>
-                          <p className="text-2xl text-white font-bold uppercase">{activeIdea.title}</p>
-                        </div>
-                        <div className="bg-black/40 border-l-2 border-jazen-gold p-4">
-                          <span className="text-xs text-jazen-gold/50 font-mono block mb-1">OUTPUT_BRB</span>
-                          <p className="text-xl text-jazen-red font-serif italic">{activeIdea.brbMessage}</p>
-                        </div>
-                        <div className="col-span-1 md:col-span-2 bg-black/40 border-l-2 border-jazen-gray p-4">
-                          <span className="text-xs text-jazen-gold/50 font-mono block mb-1">VISUAL_ANALYSIS</span>
-                          <p className="text-gray-400 font-mono text-sm">{activeIdea.themeDescription}</p>
-                        </div>
-                    </div>
-                  )}
-                </div>
-            </div>
-         </RevealOnScroll>
-      </section>
-
       {/* --- PAINEIS / PANELS --- */}
-      <section id="panels" className="container mx-auto px-4 pb-32 scroll-mt-20">
+      <section id="panels" className="container mx-auto px-4 pb-32 pt-24 scroll-mt-20">
         <RevealOnScroll>
           <SectionHeader title="PANELS" subtitle="INFO TILES" theme={theme} />
         </RevealOnScroll>
@@ -960,7 +886,7 @@ const App: React.FC = () => {
               <h2 className={`text-5xl font-bold tracking-tighter mb-4 ${isDark ? 'text-white/10' : 'text-gray-200'}`}>ABIR</h2>
            </RevealOnScroll>
            <Typewriter 
-             text="Designed & Developed by Gemini AI"
+             text="Designed & Developed by Abir Hasan Siam"
              className={`text-xs tracking-widest uppercase flex items-center justify-center gap-0 ${isDark ? 'text-jazen-gold' : 'text-gray-400'}`}
              cursorClassName={isDark ? 'bg-jazen-red' : 'bg-gray-400'}
              speed={50}
